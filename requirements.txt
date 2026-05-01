@@ -1,5 +1,12 @@
+# ── Core ──────────────────────────────────────────────────
 streamlit>=1.35.0
+
+# ── LangChain stack (all three must be listed explicitly) ──
+# langchain-core owns HumanMessage / SystemMessage / AIMessage
+# in modern LangChain; do NOT rely on langchain alone.
+langchain-core>=0.2.0
 langchain>=0.2.0
 langchain-google-genai>=1.0.7
-google-generativeai>=0.7.0
 
+# ── Google AI backend ─────────────────────────────────────
+google-generativeai>=0.7.0
