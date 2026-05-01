@@ -12,7 +12,7 @@ import re
 import json
 from datetime import datetime
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.schema import HumanMessage, SystemMessage
+from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 
 # ─────────────────────────────────────────────
 #  PAGE CONFIG  (must be first Streamlit call)
@@ -463,7 +463,6 @@ def agent_call(llm: ChatGoogleGenerativeAI, system_msg: str, history: list, new_
         if h["role"] == "user":
             messages.append(HumanMessage(content=h["content"]))
         else:
-            from langchain.schema import AIMessage
             messages.append(AIMessage(content=h["content"]))
     messages.append(HumanMessage(content=new_user_msg))
     response = llm.invoke(messages)
