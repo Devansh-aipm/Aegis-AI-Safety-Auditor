@@ -1,0 +1,5 @@
+streamlit
+pydantic-ai-slim[google]
+pydantic
+python-dotenv
+nest_asyncio
