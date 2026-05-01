@@ -300,9 +300,9 @@ VIOLATION_CATEGORIES = [
 # Tried in order — each has a separate daily quota bucket on the free tier.
 # If gemini-2.0-flash is exhausted, we automatically fall through to 1.5-flash.
 MODEL_PRIORITY = [
-    "gemini-2.0-flash",
-    "gemini-1.5-flash",
-    "gemini-1.5-flash-8b",
+    "models/gemini-flash-latest",   # primary — version-agnostic alias, always free-tier
+    "gemini-2.0-flash",             # fallback 1
+    "gemini-1.5-flash",             # fallback 2
 ]
 
 
@@ -957,4 +957,3 @@ if not st.session_state.running and st.session_state.conversation:
     render_feed(st.session_state.conversation)
 if not st.session_state.running and st.session_state.audit_log:
     render_audit_log(st.session_state.audit_log)
-    
