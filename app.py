@@ -1107,13 +1107,12 @@ if run_btn:
     # Separate histories so each agent has its own perspective
     s_hist = []   # seller sees: [opening_prompt, seller_reply, buyer_reply, ...]
     b_hist = []   # buyer  sees: [seller_message, buyer_reply, seller_reply, ...]
-    turn_n = 0
+    st.session_state.turn_n = 0
 
     # ── Helper: run one audit ────────────────────────────────────
     def run_audit(text: str, speaker: str):
         """Audit one message and append result to session state."""
-        nonlocal turn_n
-        turn_n += 1
+        st.session_state.turn_n += 1
         try:
             result = auditor_call(llm_ref, api_key, text, speaker)
         except Exception as e:
@@ -1122,7 +1121,7 @@ if run_btn:
                 "severity": "LOW", "confidence": 0,
                 "reasoning": f"Auditor error: {str(e)[:120]}",
             }
-        result["turn"]    = turn_n
+        result["turn"]    = st.session_state.turn_n
         result["speaker"] = speaker
         st.session_state.audit_log.append(result)
         update_metrics(result["verdict"], result["severity"])
