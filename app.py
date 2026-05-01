@@ -349,7 +349,14 @@ def _invoke_with_backoff(llm_ref: list, messages: list, api_key: str, label: str
 
     for attempt in range(max_retries + 1):
         try:
-            return llm_ref[0].invoke(messages).content.strip()
+            raw_content = llm_ref[0].invoke(messages).content
+            # Newer langchain-google-genai returns content as a list of blocks
+            if isinstance(raw_content, list):
+                raw_content = " ".join(
+                    (b.get("text", "") if isinstance(b, dict) else str(b))
+                    for b in raw_content
+                )
+            return str(raw_content).strip()
         except Exception as e:
             err_str = str(e)
             tag = f" [{label}]" if label else ""
